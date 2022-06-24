@@ -1,0 +1,113 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.4.1</Version>
+    <Company>Private Identity</Company>
+    <Product>Private ID® C# SDK Application Example</Product>
+    <Description>Application Example for C# SDK Decentralized biometrics with fully homomorphic encryption</Description>
+    <Copyright>Copyright ©2022 Private Identity</Copyright>
+    <PackageTags>Biometrics, Face Recognition, Machine Learning, Private Identity</PackageTags>
+    <PackageLicenseFile>PrivateIdentityLicense.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/openinfer/PrivateIdentity/wiki/C%23-SDK</PackageProjectUrl>
+    <PackageId>privid_fhe_cs_example2</PackageId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+   </PropertyGroup>
+
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;NU5128</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;NU5128</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tst\**" />
+    <EmbeddedResource Remove="tst\**" />
+    <None Remove="tst\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="pi.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="privid_app_setting.xml">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="libprivid_fhe.so">
+      <Pack>True</Pack>
+      <PackagePath>\lib</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="privid_fhe_cs" Version="2.4.8" GeneratePathProperty="true" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="PrivateIdentityLicense.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+    <ItemGroup>
+    <None Update="img/*">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="*.src">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cp  $(Pkgprivid_fhe_cs)\lib\linux\*.so $(ProjectDir)" />
+  </Target>
+
+</Project>
